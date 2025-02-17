@@ -26,8 +26,8 @@ Here are the key points in simple words:
 In summary, AWS CodeCommit offers powerful ways to control access with policies that can be based on roles, tags, or branches, giving you flexibility and security in managing repositories.
 
 
+
 *Approval Rule Template*
-Here are the key points from the video, explained in simple words:
 1. **Approval Rule Template**: This feature helps administrators automatically apply approval rules to pull requests in a repository. It ensures that certain changes (e.g., to the main branch) require approval from senior developers or specific team members.
 2. **Approval Process**: When a developer creates a pull request, the approval rule is automatically added. For example, a senior developer or someone on the approval board needs to approve the change.
 3. **Approval Members**: You can specify members who are allowed to approve the pull request, such as "Stacy" or "Matt." You can set the number of approvals needed (e.g., one approval or more).
@@ -49,8 +49,8 @@ Here are the key points from the video, explained in simple words:
 This approach streamlines the process and ensures proper checks before changes are merged into the main branch.
 
 
+
 *Overview of AWS CodeBuild*
-Here are the key points from the video explained in simple words:
 1. **Compilation Process**: When you write code (e.g., in C or C++), the next step is to **compile** it. Compilation converts the source code into an **executable file**. This file can be run to perform the actions defined in the code (like printing "Hello").
 2. **Compiling Code Manually**: On a server, you can manually compile the code using a compiler. For example, the video shows how to compile a C++ code using the `g++` compiler and produce an executable that prints "Hello".
 3. **CodeCommit & CodeBuild Integration**: In organizations, developers typically **commit** their code to a **Git repository** (like AWS CodeCommit). The code needs to be compiled, and this is where **AWS CodeBuild** comes in.
@@ -65,8 +65,8 @@ Here are the key points from the video explained in simple words:
 This process automates the compilation and storage of builds, making it easier to manage and deploy applications.
 
 
+
 *Building Code with AWS CodeBuild*
-Here are the key points from the video explained in simple words:
 1. **Setting Up CodeCommit Repository**: Before using AWS CodeBuild, you first need a **CodeCommit repository** with sample code. The presenter creates a repository called "demo-repo" and adds a sample C++ file (`Demo.cpp`) to it.
 2. **Creating a CodeBuild Project**: In AWS CodeBuild, you create a build project. The presenter names it "demo build project" and selects **CodeCommit** as the source provider, choosing the "demo-repo" as the repository where the code is stored.
 3. **Setting Build Environment**: The build environment is set to use **Ubuntu** runtime with a Linux environment, which is the default configuration for CodeBuild.
@@ -77,8 +77,8 @@ Here are the key points from the video explained in simple words:
 This practical example shows how to set up a CodeBuild project, compile code, and store the build output in an S3 bucket.
 
 
+
 *Overview of CodeDeploy*
-Here are the key points from the video explained in simple words:
 1. **Introduction to CodeDeploy**: The video introduces **CodeDeploy**, an AWS service that automates the deployment of applications to compute services like EC2 instances and Lambda. It helps in transferring application binaries (stored in S3) to the target instances.
 2. **CodeDeploy's Role**: After the build process, the binary is stored in **S3**. CodeDeploy fetches this binary from S3 and deploys it to **EC2 instances** (or other services like Lambda) automatically.
 3. **How CodeDeploy Works**: CodeDeploy fetches the application binary from the S3 bucket, stores it in a temporary folder on the EC2 instance, and then deploys it. Once deployed, the application can be started and configured as needed.
@@ -104,8 +104,8 @@ Here are the key points from the video in simple terms:
 By following these steps, you successfully set up and deploy an application using CodeDeploy on an EC2 instance.
 
 
+
 *Overview of AWS CodePipeIine*
-Here are the key points from the video in simple words:
 1. **Code Pipeline Overview**:  
    Code Pipeline automates the software release process by connecting CodeCommit, CodeBuild, and CodeDeploy.
 2. **Manual Process Issue**:  
@@ -122,8 +122,8 @@ Here are the key points from the video in simple words:
    Code Pipeline simplifies and automates the process of building and deploying code, making software releases faster and more efficient.
 
 
+
 *Creating First Pipeline*
-Here are the key points from the video in simple words:
 1. **Source and Artifacts**:  
    When a commit is made to the CodeCommit repository, CodePipeline automatically triggers the pipeline. The source artifact from CodeCommit is used as input for the build stage, and the build artifact (the compiled binary) is passed to the deploy stage.
 2. **AppSpec File Requirement**:  
@@ -147,8 +147,8 @@ Here are the key points from the video in simple words:
    The pipeline automatically handles the entire process from commit to deployment, making the software release process faster and more efficient.
 
 
+
 *Troubleshooting Failed Deployments*
-Here are the key points from the video in simple words:
 1. **Removing `appspec.yaml` file**: 
    - The `appspec.yaml` file is crucial for the CodeDeploy stage in AWS CodePipeline. 
    - If it's removed from the build spec, CodeDeploy will fail.
@@ -172,8 +172,8 @@ Here are the key points from the video in simple words:
 This covers the basics of troubleshooting a failed deployment in AWS CodePipeline and CodeDeploy.
 
 
+
 *Code Pipeline Stage Transistions*
-Here are the key points from the video in simple words:
 1. **Stage Transitions**: 
    - A stage transition links multiple stages in a pipeline. 
    - By default, transitions are enabled, meaning when one stage finishes, the next one automatically starts.
@@ -210,8 +210,8 @@ Here are the key points from the video in simple words:
 This video explains how to manage deployment configurations using different strategies to ensure your application remains available and avoids downtime during updates.
 
 
+
 *CodeDeploy AppSpec Hooks*
-Here are the key points from the video in simple words:
 1. **Deployment Lifecycle**: 
    - When updating an application, you generally block traffic, stop the old application, pull the latest version, install it, start the service, and validate that everything works.
    - This process is managed through a section in the **appspec file** called **hooks**, where you associate commands with each step.
