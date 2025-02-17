@@ -7,6 +7,8 @@
 6. **Notification Rules**: You can set up notifications for repository events like pull requests, merges, or branch creations. These notifications can be sent via email or Slack.
 7. **Data Protection**: All data in CodeCommit repositories is encrypted both in transit and at rest, ensuring security. AWS Key Management Service (KMS) is used for managing encryption keys.
 These features make CodeCommit a reliable and secure option for hosting repositories, especially when integrated with other AWS services.
+
+
 *Identity Policies for AWS CodeCommit*
 Here are the key points in simple words:
 1. **AWS CodeCommit Policies**: AWS provides three main managed policies for CodeCommit:
@@ -24,7 +26,6 @@ Here are the key points in simple words:
 8. **Testing Policies**: You can test these policies by creating repositories and testing user access, ensuring that users can only perform actions based on the policies applied.
 9. **Flexibility in Permissions**: AWS CodeCommit allows fine-grained control over permissions, so you can grant or deny specific actions based on conditions like tags, branches, or even IP addresses.
 In summary, AWS CodeCommit offers powerful ways to control access with policies that can be based on roles, tags, or branches, giving you flexibility and security in managing repositories.
-
 
 
 *Approval Rule Template*
@@ -49,7 +50,6 @@ In summary, AWS CodeCommit offers powerful ways to control access with policies 
 This approach streamlines the process and ensures proper checks before changes are merged into the main branch.
 
 
-
 *Overview of AWS CodeBuild*
 1. **Compilation Process**: When you write code (e.g., in C or C++), the next step is to **compile** it. Compilation converts the source code into an **executable file**. This file can be run to perform the actions defined in the code (like printing "Hello").
 2. **Compiling Code Manually**: On a server, you can manually compile the code using a compiler. For example, the video shows how to compile a C++ code using the `g++` compiler and produce an executable that prints "Hello".
@@ -65,7 +65,6 @@ This approach streamlines the process and ensures proper checks before changes a
 This process automates the compilation and storage of builds, making it easier to manage and deploy applications.
 
 
-
 *Building Code with AWS CodeBuild*
 1. **Setting Up CodeCommit Repository**: Before using AWS CodeBuild, you first need a **CodeCommit repository** with sample code. The presenter creates a repository called "demo-repo" and adds a sample C++ file (`Demo.cpp`) to it.
 2. **Creating a CodeBuild Project**: In AWS CodeBuild, you create a build project. The presenter names it "demo build project" and selects **CodeCommit** as the source provider, choosing the "demo-repo" as the repository where the code is stored.
@@ -77,7 +76,6 @@ This process automates the compilation and storage of builds, making it easier t
 This practical example shows how to set up a CodeBuild project, compile code, and store the build output in an S3 bucket.
 
 
-
 *Overview of CodeDeploy*
 1. **Introduction to CodeDeploy**: The video introduces **CodeDeploy**, an AWS service that automates the deployment of applications to compute services like EC2 instances and Lambda. It helps in transferring application binaries (stored in S3) to the target instances.
 2. **CodeDeploy's Role**: After the build process, the binary is stored in **S3**. CodeDeploy fetches this binary from S3 and deploys it to **EC2 instances** (or other services like Lambda) automatically.
@@ -85,6 +83,8 @@ This practical example shows how to set up a CodeBuild project, compile code, an
 4. **Demo of Deployment**: The presenter demonstrates how to create a deployment in CodeDeploy, where the binary (`my-app`) is successfully deployed to an EC2 instance.
 5. **Deployment Success**: After the deployment, the application is successfully transferred to the server, and it can be started for use. The process is completed with CodeDeploy handling the deployment task.
 In summary, CodeDeploy automates the process of moving application binaries from S3 to EC2 instances (or other targets) and deploying them for use.
+
+
 *Deployment through CodeDeploy*
 Here are the key points from the video in simple terms:
 1. **Create IAM Role for CodeDeploy Service**: 
@@ -104,7 +104,6 @@ Here are the key points from the video in simple terms:
 By following these steps, you successfully set up and deploy an application using CodeDeploy on an EC2 instance.
 
 
-
 *Overview of AWS CodePipeIine*
 1. **Code Pipeline Overview**:  
    Code Pipeline automates the software release process by connecting CodeCommit, CodeBuild, and CodeDeploy.
@@ -120,7 +119,6 @@ By following these steps, you successfully set up and deploy an application usin
    After the entire pipeline (CodeCommit → CodeBuild → CodeDeploy) runs, the updated binary is successfully deployed to the EC2 instance.
 6. **Conclusion**:  
    Code Pipeline simplifies and automates the process of building and deploying code, making software releases faster and more efficient.
-
 
 
 *Creating First Pipeline*
@@ -147,7 +145,6 @@ By following these steps, you successfully set up and deploy an application usin
    The pipeline automatically handles the entire process from commit to deployment, making the software release process faster and more efficient.
 
 
-
 *Troubleshooting Failed Deployments*
 1. **Removing `appspec.yaml` file**: 
    - The `appspec.yaml` file is crucial for the CodeDeploy stage in AWS CodePipeline. 
@@ -172,7 +169,6 @@ By following these steps, you successfully set up and deploy an application usin
 This covers the basics of troubleshooting a failed deployment in AWS CodePipeline and CodeDeploy.
 
 
-
 *Code Pipeline Stage Transistions*
 1. **Stage Transitions**: 
    - A stage transition links multiple stages in a pipeline. 
@@ -192,6 +188,8 @@ This covers the basics of troubleshooting a failed deployment in AWS CodePipelin
    - Manual approval is commonly used to control deployments in production.
    - It ensures that changes are reviewed before deployment happens.
 This video covers how to manage stage transitions and add manual approval in CodePipeline for controlled deployments.
+
+
 *CodeDeploy Deployment Configuration*
 Here are the key points from the video in simple words:
 1. **Deployment Configuration**: 
@@ -208,7 +206,6 @@ Here are the key points from the video in simple words:
 5. **Deployment Lifecycles**: 
    - In the "One at a Time" configuration, each server takes a set amount of time for deployment. For instance, it may take 10 minutes to deploy to one server before moving to the next.
 This video explains how to manage deployment configurations using different strategies to ensure your application remains available and avoids downtime during updates.
-
 
 
 *CodeDeploy AppSpec Hooks*
