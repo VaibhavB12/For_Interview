@@ -1,0 +1,265 @@
+Resources: 
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-05b10e08d247fb927
+# Upload this file to cloudFormation : Create stack > upload template > give stack name > give parameter, tags, IAM role, Stack policy, Rollback configuration, notification, stack create options > create stack
+# You have options to check in the stack : Stack info, Events, Resources, Output, Parameters, Templates, Change sets
+# To make changes in the stack : Update stack > Replace current template > upload > select new template file > update stack
+Resources: 
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-05b10e08d247fb927
+      Tags:
+        - Key: "Name"
+          Value: "MyFirstInstance"
+# When you update the stack it will delete old resource & create new one, So its better to check change set.
+# If we delete stack it will delete resources also
+
+# Intrinsic functions are built-in functions provided by cloudFormation which helps you to manage the stacks. For example Join, Ref, Condition function
+# !Join : has two arguments 1st is delimitor & second is list of strings Example : !Join [":", [a, b, c]]
+Resources: 
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-05b10e08d247fb927
+      Tags:
+        - Key: "Name"
+          Value: !Join ["-", [my, instance, from, cloudFormation]]
+# Create stack from above template 
+Resources: 
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-05b10e08d247fb927
+      Tags:
+        - Key: "Name"
+          Value: "Change1"
+# Make changes like above in template & update the template
+# Update > Replace current template > choose template > View Change set > Check Replacement Options tab :
+# 1.True : Some properties cannot be updated directly like EC2 instance's AMI ID, so CloudFormation deletes and recreates the resource.
+# 2.False : The resource will not be replaced; instead, it will be updated in place. For example change of instance type from t2.micro to t2.small
+# 3.Conditional : The resource might be replaced depending on specific property changes. Example : RDS Instance: Updating DBInstanceClass may not replace it, but changing DBSubnetGroup will.
+# TO CHECK CHANGE SET USE COMMAND : aws cloudformation describe-change-set --change-set-name my-change-set
+# Look for "Replacement": "True" in the response.
+# IMP : Must check Replacement tab of view change set if it says true it is going to delete old resource & replace it with new ones
+
+#!Ref : is used to retrieve the logical ID or value of a resource, parameter, or output. It helps reference one part of the template in another.
+Resources: 
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-05b10e08d247fb927
+      Tags:
+        - Key: "Name"
+          Value: !Join
+          - ' '
+          - -  "My Instance in"
+            -  !Ref AWS ::Region  
+# Here we dont have any logical ID or name to reference so we use pseudo parameter like AWS region
+# Pseudo parameter : are predefined or built-in aws parameters which we can use as argument to !Ref function
+# We can have Pseudo parameters like AccountId, NotificationARN, StackId, StackName etc.
+# Create stack from above template : If stack creation fails it will rollback changes automatically
+# Must choose AMI ID from the same region in which cloudFormation is running
+
+# multi resource :
+Resources: 
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-05b10e08d247fb927
+      Tags:
+        - Key: "Name"
+          Value: !Join ["-", [my, instance, from, cloudFormation]]
+      SecurityGroups:
+        - !Ref VprofileSG
+  VprofileSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow ssh & http from myIP
+      SecurityGroupIngress: #Inbound rule
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 183.83.39.93/0          
+      SecurityGroupEgress: #Outbound rule No need to give
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0           
+# We are refering the logical id of security group above 
+
+# Mappings : The Mappings section in a CloudFormation template allows you to define key-value pairs that store static data. This helps avoid hardcoding values and makes the template reusable across different environments or regions. 
+# First we define the mappings & then we access the values by using !FindInMap function. It takes 3 parameters in a list 1st is Mapping name, 2nd is Key & 3rd is value
+# Example mapping for AMIs : map multiple AMI IDs to the regions & use them 
+Mappings:
+  AmiRegionMap:
+    us-east-1:
+      AMI: "ami-12345678"
+    us-west-2:
+      AMI: "ami-87654321"
+Resources: 
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: !FindInMap 
+        - AmiRegionMap
+        - !Ref AWS::Region
+        - AMI
+      Tags:
+        - Key: "Name"
+          Value: !Join ["-", [my, instance, from, cloudFormation]]
+      SecurityGroups:
+        - !Ref VprofileSG
+  VprofileSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow ssh & http from myIP
+      SecurityGroupIngress: #Inbound rule
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 183.83.39.93/0 # my ip
+# Here we have used !FindInMap function to map values of the AMI IDs from the mappings        
+
+# Parameters : The Parameters section in a CloudFormation template allows you to accept user-defined input at deployment time. This makes the template dynamic and reusable.
+Parameters: # we have 3 parameters NameOfService, InstanceTypeParam & KeyName
+  NameOfService:
+    Description: "The name of the service this stack is to be used for"
+    Type: String
+  InstanceTypeParam:
+    Type: String
+    Default: "t2.micro"
+    AllowedValues:
+      - "t2.micro"
+      - "t3.micro"
+      - "t3.small"
+    Description: "Select EC2 instance type"
+  KeyName: 
+    Description: "Name of EC2 login key"
+    Type: AWS::EC2::KeyPair::KeyName
+Mappings:
+  AmiRegionMap:
+    us-east-1:
+      AMI: "ami-12345678"
+    us-west-2:
+      AMI: "ami-87654321"
+Resources: 
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceTypeParam
+      KeyName: !Ref KeyName
+      ImageId: !FindInMap 
+        - AmiRegionMap
+        - !Ref AWS::Region
+        - AMI
+      Tags:
+        - Key: "Name"
+          Value: !Ref NameOfService
+      SecurityGroups:
+        - !Ref VprofileSG
+  VprofileSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow ssh & http from myIP
+      SecurityGroupIngress: #Inbound rule
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 183.83.39.93/0 # my ip
+# Create stack > upload file > give stack name > select parameters NameOfService, InstanceTypeParam & KeyName from drop down list > create stack
+
+# Outputs : Output is used to print the output or to export the value to other cloudFormation template
+Outputs:
+  BucketName:
+    Description: "The name of the S3 bucket"
+    Value: !Ref MyS3Bucket
+  InstancePublicIP:
+    Description: "Public IP of EC2 instance"
+    Value: !GetAtt MyEC2Instance.PublicIp
+  VPCID:
+    Description: "VPC ID of the stack"
+    Value: !Ref MyVPC
+    Export:
+      Name: "MyStack-VPCID"
+# !Ref MyS3Bucket → Gets the bucket name.
+# !GetAtt MyEC2Instance.PublicIp → Fetches the public IP of the EC2 instance.
+# Export → Allows this output to be used in another stack.
+# Command : aws cloudformation describe-stacks --stack-name MyStack
+
+# CloudFormation Init : (AWS::CloudFormation::Init)
+# The AWS::CloudFormation::Init resource is used to configure instances at startup. It helps install software, create files, and run commands when an instance is launched. Basically to provide user data we use init
+Resources:
+  MyEC2Instance:
+    Type: "AWS::EC2::Instance"
+    Metadata:
+      AWS::CloudFormation::Init:
+        config:
+          packages:
+            yum:
+              httpd: []  # Installs Apache
+          files:
+            /var/www/html/index.html:
+              content: |
+                <h1>Welcome to My Website</h1>
+              mode: "000644"
+              owner: "root"
+              group: "root"
+          services:
+            sysvinit:
+              httpd:
+                enabled: true
+                ensureRunning: true
+    Properties:
+      ImageId: "ami-12345678"
+      InstanceType: "t2.micro"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MyEC2Instance --configsets default
+
+
+=== Project
+1st Template :
+# VPC 
+Mappings
+Resources > VPC, PublicSubnetOne, PublicSubnetTwo, InternetGateway, GatewayAttachment, PublicRouteTable, PublicRoute, PublicSubnetOneRouteTableAssociation, PublicSubnetTwoRouteTableAssociation, 
+# Cluster & IAM roles : 
+  ECSCluster, ECSTaskExecutionRole, ECSRole, 
+# SG for load balancer :
+  PublicLoadBalancerSG
+# Fargate Container SG :
+  FargateContainerSG ECSSecurityGroupIngressFromPublicALB ECSSecurityGroupIngressFromSelf
+# load balancer :
+  PublicLoadBalancer 
+# Target group :
+  DummyTargetGroup 
+# Listener :
+  PublicLoadBalancerListener
+Outputs > VPCId, PublicSubnetOne, PublicSubnetTwo, FargateContainerSG, ClusterName, ECSRole, ECSTaskExecutionRole, PublicListener, ExternalUrl ( building ALB URL )
+
+2nd Template :
+Parameters > StackName, ServiceName, ImageUrl, ContainerPort, ContainerCpu, ContainerMemory, Path, Priority, DesiredCount, Role
+Conditions > HasCustomRole
+Resources > TaskDefinition, TargetGroup, LoadBalancerRule, Service

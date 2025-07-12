@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+  build:
+    commands:
+      - echo "Running tests..."
+      - npm test
+      - echo "Building Docker image for staging..."
+      - docker build -t your-staging-repo-uri:latest .
+  post_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region your-region | docker login --username AWS --password-stdin your-staging-repo-uri
+      - echo "Pushing Docker image to ECR..."
+      - docker tag your-staging-repo-uri:latest your-staging-repo-uri:latest
+      - docker push your-staging-repo-uri:latest
+      - echo "Updating ECS service..."
+      - aws ecs update-service --cluster your-staging-cluster --service your-staging-service --force-new-deployment
+artifacts:
+  files:
+    - '**/*'

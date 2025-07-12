@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+  build:
+    commands:
+      - echo "Running tests..."
+      - npm test
+      - echo "Building Docker image for production..."
+      - docker build -t your-production-repo-uri:latest .
+  post_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region your-region | docker login --username AWS --password-stdin your-production-repo-uri
+      - echo "Pushing Docker image to ECR..."
+      - docker tag your-production-repo-uri:latest your-production-repo-uri:latest
+      - docker push your-production-repo-uri:latest
+      - echo "Updating ECS service..."
+      - aws ecs update-service --cluster your-production-cluster --service your-production-service --force-new-deployment
+artifacts:
+  files:
+    - '**/*'

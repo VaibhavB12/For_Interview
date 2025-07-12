@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - npm install
+      - echo "Fetching environment variables from SSM Parameter Store..."
+      - export ENVIRONMENT=$(aws ssm get-parameter --name "/backend/ENVIRONMENT" --query "Parameter.Value" --output text)
+      - export ECR_REPO_URI=$(aws ssm get-parameter --name "/backend/$ENVIRONMENT/ECR_REPO_URI" --query "Parameter.Value" --output text)
+      - export ECS_CLUSTER=$(aws ssm get-parameter --name "/backend/$ENVIRONMENT/ECS_CLUSTER" --query "Parameter.Value" --output text)
+      - export ECS_SERVICE=$(aws ssm get-parameter --name "/backend/$ENVIRONMENT/ECS_SERVICE" --query "Parameter.Value" --output text)
+
+  build:
+    commands:
+      - npm test
+      - docker build -t $ECR_REPO_URI:latest .
+
+  post_build:
+    commands:
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO_URI
+      - docker tag $ECR_REPO_URI:latest $ECR_REPO_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker push $ECR_REPO_URI:latest
+      - docker push $ECR_REPO_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --force-new-deployment
+
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: yes

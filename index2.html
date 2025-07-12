@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive CSS Examples</title>
+    <style>
+        /* CSS Reset with Universal Selector */
+        /* Topic: Universal Selector & CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Basic Selectors */
+        /* Topic: Element Selector */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        /* Topic: Class Selector */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #4a6fa5;
+            color: white;
+            border-radius: 5px;
+        }
+
+        /* Topic: element.class Selector */
+        h1.header-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Topic: ID Selector */
+        #main-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Topic: Group Selector */
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Advanced Selectors */
+        /* Topic: Descendant Selector (space) */
+        section div {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #3498db;
+        }
+
+        /* Topic: Child Selector (>) */
+        section > p {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+
+        /* Topic: Adjacent Selector (+) */
+        h2 + p {
+            font-weight: bold;
+        }
+
+        /* Attribute Selectors */
+        /* Topic: Attribute Selector - element[attribute] */
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Topic: Attribute Spaced Selector (~) */
+        a[title~="example"] {
+            color: #e74c3c;
+        }
+
+        /* Topic: Attribute Selector (^) - Prefixed Value */
+        a[href^="https"] {
+            background-color: #f1c40f;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        /* Topic: Attribute Selector ($) - Suffixed Value */
+        a[href$=".pdf"] {
+            background-color: #e74c3c;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        /* Topic: Attribute Contains Selector (*) */
+        a[href*="w3schools"] {
+            text-decoration: underline;
+        }
+
+        /* Topic: Attribute Hyphenated Selector (|) */
+        div[lang|="en"] {
+            background-color: #f9f9f9;
+        }
+
+        /* Pseudo-Classes & Pseudo-Elements */
+        /* Topic: :hover - User Action Pseudo-Class */
+        button:hover {
+            background-color: #2980b9;
+            cursor: pointer;
+        }
+
+        /* Topic: :active - User Action Pseudo-Class */
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Topic: :focus - User Action Pseudo-Class */
+        input:focus {
+            outline: 2px solid #3498db;
+        }
+
+        /* Topic: :focus-within - User Action Pseudo-Class */
+        .form-group:focus-within {
+            background-color: #f0f8ff;
+        }
+
+        /* Topic: :enabled / :disabled - Input Pseudo-Classes */
+        input:disabled {
+            background-color: #ecf0f1;
+            cursor: not-allowed;
+        }
+
+        /* Topic: :read-only / :read-write - Input Pseudo-Classes */
+        input:read-only {
+            background-color: #f5f5f5;
+        }
+
+        /* Topic: :placeholder-shown - Input Pseudo-Class */
+        input:placeholder-shown {
+            border-color: #bdc3c7;
+        }
+
+        /* Topic: :valid / :invalid & :required - Input Pseudo-Class */
+        input:valid {
+            border-color: #2ecc71;
+        }
+
+        input:invalid {
+            border-color: #e74c3c;
+        }
+
+        input:required {
+            border-left: 3px solid #e74c3c;
+        }
+
+        /* Topic: :nth-child() Selector - Tree Structural Pseudo-Class */
+        ul li:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        /* Topic: :nth-child() Selector - Complex Arguments */
+        ul li:nth-child(3n+1) {
+            font-weight: bold;
+        }
+
+        /* Topic: Pseudo-Element vs. Pseudo-Class */
+        /* Topic: ::first-line - Pseudo-Element */
+        p::first-line {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* Topic: ::first-letter - Pseudo-Element */
+        p::first-letter {
+            font-size: 150%;
+            color: #e74c3c;
+        }
+
+        /* Topic: ::before / ::after - Pseudo-Elements */
+        .note::before {
+            content: "Note: ";
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .note::after {
+            content: " ← Important";
+            font-size: 0.8em;
+            color: #7f8c8d;
+        }
+
+        /* CSS Typography */
+        /* Topic: font-family */
+        .custom-font {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Topic: @font-face */
+        @font-face {
+            font-family: 'MyCustomFont';
+            src: url('path/to/font.woff2') format('woff2');
+        }
+
+        /* Topic: font-weight */
+        .bold-text {
+            font-weight: 700;
+        }
+
+        /* Topic: line-height */
+        .spaced-text {
+            line-height: 2;
+        }
+
+        /* Topic: font-style */
+        .italic-text {
+            font-style: italic;
+        }
+
+        /* Topic: text-transform */
+        .uppercase {
+            text-transform: uppercase;
+        }
+
+        /* Topic: font-variant */
+        .small-caps {
+            font-variant: small-caps;
+        }
+
+        /* Topic: text-decoration */
+        .underlined {
+            text-decoration: underline wavy #e74c3c;
+        }
+
+        /* Topic: text-alignment */
+        .center-text {
+            text-align: center;
+        }
+
+        /* Topic: Indenting Text */
+        .indented {
+            text-indent: 2em;
+        }
+
+        /* CSS Colors & Gradients */
+        /* Topic: Color Property - Applying Foreground Color */
+        .colored-text {
+            color: #e74c3c;
+        }
+
+        /* Topic: Using RGB Values */
+        .rgb-color {
+            color: rgb(46, 204, 113);
+        }
+
+        /* Topic: Hexadecimal Notations */
+        .hex-color {
+            color: #3498db;
+        }
+
+        /* Topic: Using HSL Values */
+        .hsl-color {
+            color: hsl(204, 70%, 53%);
+        }
+
+        /* Topic: Working with Opacity */
+        .transparent {
+            opacity: 0.7;
+        }
+
+        /* Topic: CSS Gradients - linear-gradient() */
+        .linear-gradient {
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            height: 100px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        /* Topic: CSS Gradients - radial-gradient() */
+        .radial-gradient {
+            background: radial-gradient(circle, #3498db, #2ecc71);
+            height: 100px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        /* Topic: CSS Gradients - conic-gradient() */
+        .conic-gradient {
+            background: conic-gradient(#e74c3c, #f1c40f, #2ecc71, #3498db, #9b59b6, #e74c3c);
+            height: 100px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        /* CSS Units & Measurements */
+        /* Absolute Units */
+        .px-unit {
+            font-size: 16px;
+        }
+
+        .pt-unit {
+            font-size: 12pt;
+        }
+
+        /* Relative Units */
+        .em-unit {
+            font-size: 1.2em;
+        }
+
+        .rem-unit {
+            font-size: 1.2rem;
+        }
+
+        .percent-unit {
+            width: 50%;
+        }
+
+        .vw-unit {
+            width: 50vw;
+        }
+
+        /* CSS Box Model & Layouts */
+        /* Topic: CSS Box-Model */
+        .box-model {
+            width: 300px;
+            height: 200px;
+            padding: 20px;
+            border: 5px solid #3498db;
+            margin: 20px;
+            background-color: #f1c40f;
+        }
+
+        /* Topic: Applying Borders */
+        .bordered {
+            border: 2px dashed #e74c3c;
+            border-radius: 10px;
+        }
+
+        /* Topic: Applying Padding */
+        .padded {
+            padding: 20px;
+        }
+
+        /* Topic: Applying Margin */
+        .margined {
+            margin: 20px;
+        }
+
+        /* Topic: Collapsing Margins & Negative Margins */
+        .margin-collapse {
+            margin: 20px 0;
+        }
+
+        .negative-margin {
+            margin-top: -10px;
+        }
+
+        /* Topic: Understanding Float */
+        .float-left {
+            float: left;
+            width: 50%;
+            background-color: #3498db;
+            height: 100px;
+        }
+
+        .float-right {
+            float: right;
+            width: 50%;
+            background-color: #2ecc71;
+            height: 100px;
+        }
+
+        /* Topic: Clearing Floats */
+        .clear-floats {
+            clear: both;
+        }
+
+        /* Topic: Clearfix - Modern Way to Clear Floats */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Topic: display Property */
+        .display-block {
+            display: block;
+            background-color: #f1c40f;
+            margin: 10px 0;
+            padding: 10px;
+        }
+
+        .display-inline {
+            display: inline;
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px;
+        }
+
+        .display-inline-block {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            background-color: #2ecc71;
+            margin: 10px;
+        }
+
+        /* CSS Grid */
+        /* Topic: Understanding Grids */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .grid-item {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Topic: Spanning Rows and Columns in Grid */
+        .grid-span {
+            grid-column: span 2;
+            background-color: #e74c3c;
+        }
+
+        /* CSS Flexbox */
+        /* Topic: Introduction to CSS Flexbox */
+        .flex-container {
+            display: flex;
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin: 20px 0;
+        }
+
+        /* Topic: Flex Container Properties */
+        .flex-container {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Topic: Flex Item Properties */
+        .flex-item {
+            background-color: #9b59b6;
+            color: white;
+            padding: 20px;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        /* Topic: Calculation of flex-grow */
+        .flex-grow-2 {
+            flex-grow: 2;
+            background-color: #e74c3c;
+        }
+
+        /* CSS Media Queries (Responsive Design) */
+        /* Topic: @media query - Introduction */
+        @media screen and (max-width: 768px) {
+            .responsive-box {
+                width: 100%;
+                background-color: #2ecc71;
+            }
+        }
+
+        @media screen and (min-width: 769px) {
+            .responsive-box {
+                width: 50%;
+                background-color: #3498db;
+            }
+        }
+
+        .responsive-box {
+            height: 100px;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+
+        /* CSS Transformations */
+        /* Topic: translate() Method */
+        .translate-box {
+            width: 100px;
+            height: 100px;
+            background-color: #e74c3c;
+            transform: translate(50px, 20px);
+            margin: 20px;
+        }
+
+        /* Topic: rotate() Method */
+        .rotate-box {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            transform: rotate(45deg);
+            margin: 20px;
+        }
+
+        /* Topic: Resizing Elements Using scale() */
+        .scale-box {
+            width: 100px;
+            height: 100px;
+            background-color: #2ecc71;
+            transform: scale(1.5);
+            margin: 20px;
+        }
+
+        /* Topic: Transforming Elements Using skew() */
+        .skew-box {
+            width: 100px;
+            height: 100px;
+            background-color: #f1c40f;
+            transform: skew(20deg);
+            margin: 20px;
+        }
+
+        /* CSS Transitions & Animations */
+        /* Topic: Introduction to CSS Transitions */
+        .transition-box {
+            width: 100px;
+            height: 100px;
+            background-color: #9b59b6;
+            transition: all 0.3s ease;
+            margin: 20px;
+        }
+
+        /* Topic: Transitioning CSS Properties */
+        .transition-box:hover {
+            width: 150px;
+            height: 150px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+        }
+
+        /* Topic: Combining Transform with Transition */
+        .transform-transition {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            transition: transform 0.5s ease;
+            margin: 20px;
+        }
+
+        .transform-transition:hover {
+            transform: rotate(180deg) scale(1.2);
+        }
+
+        /* Topic: Introduction to CSS Animations */
+        /* Topic: @keyframes Rule */
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(100px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* Topic: animation-name & animation-duration */
+        .animated-box {
+            width: 100px;
+            height: 100px;
+            background-color: #2ecc71;
+            animation-name: slide;
+            animation-duration: 2s;
+            margin: 20px;
+        }
+
+        /* Topic: animation-delay */
+        .delayed-animation {
+            animation-delay: 1s;
+        }
+
+        /* Topic: Controlling Iterations with animation-iteration-count */
+        .infinite-animation {
+            animation-iteration-count: infinite;
+        }
+
+        /* Topic: Changing Animation Direction with animation-direction */
+        .alternate-animation {
+            animation-direction: alternate;
+        }
+
+        /* Topic: Defining Speed Curve with animation-timing-function */
+        .ease-animation {
+            animation-timing-function: ease-in-out;
+        }
+
+        /* Topic: animation-fill-mode */
+        .fillmode-animation {
+            animation-fill-mode: forwards;
+        }
+
+        /* Utility classes for layout */
+        .example-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .example-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .example-description {
+            margin-bottom: 15px;
+        }
+
+        .example-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .example-item {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Topic: Element Selector -->
+    <header class="header">
+        <h1 class="header-title">Comprehensive CSS Examples</h1>
+        <p>All CSS topics in one place</p>
+    </header>
+
+    <main id="main-content">
+        <!-- Basic Selectors Section -->
+        <section class="example-section">
+            <h2 class="example-title">Basic CSS Selectors</h2>
+            
+            <div class="example-container">
+                <!-- Topic: Class Selector -->
+                <div class="example-item">
+                    <h3>Class Selector</h3>
+                    <p>This div has class="example-item"</p>
+                </div>
+                
+                <!-- Topic: element.class Selector -->
+                <div class="example-item">
+                    <h3 class="special-heading">element.class Selector</h3>
+                    <p>h3.special-heading would select this heading</p>
+                </div>
+                
+                <!-- Topic: ID Selector -->
+                <div id="unique-element" class="example-item">
+                    <h3>ID Selector</h3>
+                    <p>This div has id="unique-element"</p>
+                </div>
+                
+                <!-- Topic: Group Selector -->
+                <div class="example-item">
+                    <h3>Group Selector</h3>
+                    <p>h1, h2, h3 selects all heading elements</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Selectors Section -->
+        <section class="example-section">
+            <h2 class="example-title">Advanced CSS Selectors</h2>
+            
+            <div class="example-container">
+                <!-- Topic: Descendant Selector -->
+                <div class="example-item">
+                    <h3>Descendant Selector (space)</h3>
+                    <div>
+                        <p>section div selects this div inside section</p>
+                    </div>
+                </div>
+                
+                <!-- Topic: Child Selector -->
+                <div class="example-item">
+                    <h3>Child Selector (>)</h3>
+                    <p>section > p selects direct child paragraphs of section</p>
+                    <div>
+                        <p>But not this paragraph inside a div</p>
+                    </div>
+                </div>
+                
+                <!-- Topic: Adjacent Selector -->
+                <div class="example-item">
+                    <h3>Adjacent Selector (+)</h3>
+                    <p>h2 + p selects paragraphs immediately after h2</p>
+                </div>
+            </div>
+            
+            <!-- Attribute Selectors -->
+            <div class="example-container">
+                <!-- Topic: Attribute Selector -->
+                <div class="example-item">
+                    <h3>Attribute Selector</h3>
+                    <input type="text" placeholder="input[type='text']">
+                </div>
+                
+                <!-- Topic: Attribute Spaced Selector -->
+                <div class="example-item">
+                    <h3>Attribute Spaced Selector (~)</h3>
+                    <a href="#" title="example link">Link with title="example link"</a>
+                </div>
+                
+                <!-- Topic: Prefixed Value Selector -->
+                <div class="example-item">
+                    <h3>Prefixed Value Selector (^)</h3>
+                    <a href="https://example.com">https://example.com</a>
+                </div>
+                
+                <!-- Topic: Suffixed Value Selector -->
+                <div class="example-item">
+                    <h3>Suffixed Value Selector ($)</h3>
+                    <a href="document.pdf">document.pdf</a>
+                </div>
+                
+                <!-- Topic: Attribute Contains Selector -->
+                <div class="example-item">
+                    <h3>Attribute Contains Selector (*)</h3>
+                    <a href="https://www.w3schools.com">w3schools.com</a>
+                </div>
+                
+                <!-- Topic: Hyphenated Selector -->
+                <div class="example-item" lang="en-US">
+                    <h3>Hyphenated Selector (|)</h3>
+                    <p>div[lang|="en"] selects this div with lang="en-US"</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pseudo-Classes & Pseudo-Elements Section -->
+        <section class="example-section">
+            <h2 class="example-title">Pseudo-Classes & Pseudo-Elements</h2>
+            
+            <div class="example-container">
+                <!-- Topic: Hover Pseudo-Class -->
+                <div class="example-item">
+                    <h3>:hover Pseudo-Class</h3>
+                    <button>Hover over me</button>
+                </div>
+                
+                <!-- Topic: Active Pseudo-Class -->
+                <div class="example-item">
+                    <h3>:active Pseudo-Class</h3>
+                    <button>Click me</button>
+                </div>
+                
+                <!-- Topic: Focus Pseudo-Class -->
+                <div class="example-item">
+                    <h3>:focus Pseudo-Class</h3>
+                    <input type="text" placeholder="Click here">
+                </div>
+                
+                <!-- Topic: Focus Within Pseudo-Class -->
+                <div class="example-item form-group">
+                    <h3>:focus-within Pseudo-Class</h3>
+                    <input type="text" placeholder="Form group highlights when focused">
+                </div>
+            </div>
+            
+            <div class="example-container">
+                <!-- Topic: Enabled/Disabled -->
+                <div class="example-item">
+                    <h3>:enabled / :disabled</h3>
+                    <input type="text" placeholder="Enabled">
+                    <input type="text" placeholder="Disabled" disabled>
+                </div>
+                
+                <!-- Topic: Read-only/Read-write -->
+                <div class="example-item">
+                    <h3>:read-only / :read-write</h3>
+                    <input type="text" value="Read-only" readonly>
+                    <input type="text" value="Read-write">
+                </div>
+                
+                <!-- Topic: Placeholder-shown -->
+                <div class="example-item">
+                    <h3>:placeholder-shown</h3>
+                    <input type="text" placeholder="Type something...">
+                </div>
+                
+                <!-- Topic: Valid/Invalid -->
+                <div class="example-item">
+                    <h3>:valid / :invalid</h3>
+                    <input type="email" placeholder="Enter valid email" required>
+                </div>
+            </div>
+            
+            <div class="example-container">
+                <!-- Topic: nth-child -->
+                <div class="example-item">
+                    <h3>:nth-child()</h3>
+                    <ul>
+                        <li>Item 1</li>
+                        <li>Item 2</li>
+                        <li>Item 3</li>
+                        <li>Item 4</li>
+                        <li>Item 5</li>
+                    </ul>
+                </div>
+                
+                <!-- Topic: Pseudo-Elements -->
+                <div class="example-item">
+                    <h3>::first-line & ::first-letter</h3>
+                    <p>This paragraph demonstrates the ::first-line and ::first-letter pseudo-elements. The first line is bold and the first letter is larger.</p>
+                </div>
+                
+                <!-- Topic: Before/After -->
+                <div class="example-item">
+                    <h3>::before / ::after</h3>
+                    <p class="note">This note has content added before and after it using pseudo-elements.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Typography Section -->
+        <section class="example-section">
+            <h2 class="example-title">CSS Typography</h2>
+            
+            <div class="example-container">
+                <div class="example-item">
+                    <h3>font-family</h3>
+                    <p class="custom-font">Custom font family (Courier New)</p>
+                </div>
+                
+                <div class="example-item">
+                    <h3>font-weight</h3>
+                    <p class="bold-text">Bold text (font-weight: 700)</p>
+                </div>
+                
+                <div class="example-item">
+                    <h3>line-height</h3>
+                    <p class="spaced-text">Text with increased line-height for better readability.</p>
+                </div>
+                
+                <div class="example-item">
+                    <h3>font-style</h3>
+                    <p class="italic-text">Italic text</p>
+                </div>
+            </div>
+            
+            <div class="example-container">
+                <div class="example-item">
+                    <h3>text-transform</h3>
+                    <p class="uppercase">uppercase text</p>
+                </div>
+                
+                <div class="example-item">
+                    <h3>font-variant</h3>
+                    <p class="small-caps">Small Caps Text</p>
+                </div>
+                
+                <div class="example-item">
+                    <h3>text-decoration</h3>
+                    <p class="underlined">Underlined with wavy red line</p>
+                </div>
+                
+                <div class="example-item">
+                    <h3>text-alignment</h3>
+                    <p class="center-text">Centered text</p>
+                </div>
+            </div>
+            
+            <div class="example-item">
+                <h3>text-indent</h3>
+                <p class="indented">This paragraph has the first line indented by 2em. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.</p>
+            </div>
+        </section>
+
+        <!-- CSS Colors & Gradients Section -->
+        <section class="example-section">
+            <h2 class="example-title">CSS Colors & Gradients</h2>
+            
+            <div class="example-container">
+                <div class="example-item">
+                    <h3>Color Property</h3>
+                    <p class="colored-text">Red text using color property</p>
+                </div>
+                
+                <div class="example-item">
+                    <h3>RGB Values</h3>
+                    <p class="rgb-color">Green text using rgb()</p>
+                </div>
+                
+                <div class="example-item">
+                    <h3>Hexadecimal</h3>
+                    <p class="hex-color">Blue text using hex</p>
+                </div>
+                
+                <div class="example-item">
+                    <h3>HSL Values</h3>
+                    <p class="hsl-color">Blue text using hsl()</p>
+                </div>
+            </div>
+            
+            <div class="example-container">
+                <div class="example-item">
+                    <h3>Opacity</h3>
+                    <p class="transparent">Semi-transparent text</p>
+                </div>
+                
+                <div class="example-item">
+                    <h3>Linear Gradient</h3>
+                    <div class="linear-gradient"></div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>Radial Gradient</h3>
+                    <div class="radial-gradient"></div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>Conic Gradient</h3>
+                    <div class="conic-gradient"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Units & Measurements Section -->
+        <section class="example-section">
+            <h2 class="example-title">CSS Units & Measurements</h2>
+            
+            <div class="example-container">
+                <div class="example-item">
+                    <h3>Absolute Units</h3>
+                    <p class="px-unit">16px font size</p>
+                    <p class="pt-unit">12pt font size</p>
+                </div>
+                
+                <div class="example-item">
+                    <h3>Relative Units</h3>
+                    <p class="em-unit">1.2em font size</p>
+                    <p class="rem-unit">1.2rem font size</p>
+                    <div class="percent-unit" style="background-color: #eee; height: 20px;">50% width</div>
+                    <div class="vw-unit" style="background-color: #ddd; height: 20px;">50vw width</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Box Model & Layouts Section -->
+        <section class="example-section">
+            <h2 class="example-title">CSS Box Model & Layouts</h2>
+            
+            <div class="example-container">
+                <div class="example-item">
+                    <h3>Box Model</h3>
+                    <div class="box-model">Content with padding, border, and margin</div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>Borders</h3>
+                    <div class="bordered">Dashed red border with radius</div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>Padding</h3>
+                    <div class="padded">Content with 20px padding</div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>Margin</h3>
+                    <div class="margined">Content with 20px margin</div>
+                </div>
+            </div>
+            
+            <div class="example-container">
+                <div class="example-item">
+                    <h3>Floats</h3>
+                    <div class="float-left">Float left</div>
+                    <div class="float-right">Float right</div>
+                    <div class="clear-floats">Cleared floats</div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>Display Property</h3>
+                    <div class="display-block">Block element</div>
+                    <span class="display-inline">Inline element</span>
+                    <div class="display-inline-block">Inline-block element</div>
+                </div>
+            </div>
+            
+            <div class="example-item">
+                <h3>CSS Grid</h3>
+                <div class="grid-container">
+                    <div class="grid-item">Grid Item 1</div>
+                    <div class="grid-item">Grid Item 2</div>
+                    <div class="grid-item">Grid Item 3</div>
+                    <div class="grid-item grid-span">Spanned Item</div>
+                    <div class="grid-item">Grid Item 5</div>
+                </div>
+            </div>
+            
+            <div class="example-item">
+                <h3>Flexbox</h3>
+                <div class="flex-container">
+                    <div class="flex-item">Flex Item 1</div>
+                    <div class="flex-item">Flex Item 2</div>
+                    <div class="flex-item flex-grow-2">Flex Item 3 (grow 2)</div>
+                </div>
+            </div>
+            
+            <div class="example-item">
+                <h3>Responsive Design</h3>
+                <div class="responsive-box"></div>
+                <p>Resize browser to see color change at 768px breakpoint</p>
+            </div>
+        </section>
+
+        <!-- CSS Transformations Section -->
+        <section class="example-section">
+            <h2 class="example-title">CSS Transformations</h2>
+            
+            <div class="example-container">
+                <div class="example-item">
+                    <h3>translate()</h3>
+                    <div class="translate-box"></div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>rotate()</h3>
+                    <div class="rotate-box"></div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>scale()</h3>
+                    <div class="scale-box"></div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>skew()</h3>
+                    <div class="skew-box"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Transitions & Animations Section -->
+        <section class="example-section">
+            <h2 class="example-title">CSS Transitions & Animations</h2>
+            
+            <div class="example-container">
+                <div class="example-item">
+                    <h3>Transitions</h3>
+                    <div class="transition-box">Hover over me</div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>Transform + Transition</h3>
+                    <div class="transform-transition">Hover over me</div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>Animations</h3>
+                    <div class="animated-box"></div>
+                    <div class="animated-box delayed-animation"></div>
+                    <div class="animated-box infinite-animation alternate-animation ease-animation"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Note about Sass and Bootstrap -->
+        <section class="example-section">
+            <h2 class="example-title">Sass & Bootstrap</h2>
+            <p>While Sass (CSS preprocessor) and Bootstrap (CSS framework) are important topics, they require additional setup and configuration that can't be fully demonstrated in this static HTML/CSS example.</p>
+            <p>To use Sass, you would need to install it and compile your .scss files to .css. Bootstrap would require including its CSS and JS files in your project.</p>
+        </section>
+    </main>
+</body>
+</html>

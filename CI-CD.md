@@ -121,6 +121,7 @@ By following these steps, you successfully set up and deploy an application usin
    Code Pipeline simplifies and automates the process of building and deploying code, making software releases faster and more efficient.
 
 
+
 *Creating First Pipeline*
 1. **Source and Artifacts**:  
    When a commit is made to the CodeCommit repository, CodePipeline automatically triggers the pipeline. The source artifact from CodeCommit is used as input for the build stage, and the build artifact (the compiled binary) is passed to the deploy stage.

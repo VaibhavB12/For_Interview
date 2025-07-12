@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - npm install
+      - echo "Fetching environment variables from SSM Parameter Store..."
+      - export ENVIRONMENT=$(aws ssm get-parameter --name "/frontend/ENVIRONMENT" --query "Parameter.Value" --output text)
+      - export S3_BUCKET=$(aws ssm get-parameter --name "/frontend/$ENVIRONMENT/S3_BUCKET" --query "Parameter.Value" --output text)
+      - export CLOUDFRONT_ID=$(aws ssm get-parameter --name "/frontend/$ENVIRONMENT/CLOUDFRONT_ID" --query "Parameter.Value" --output text)
+
+  build:
+    commands:
+      - echo "Building React app for $ENVIRONMENT..."
+      - npm run build
+
+  post_build:
+    commands:
+      - echo "Deploying to S3 bucket: $S3_BUCKET"
+      - aws s3 sync build/ s3://$S3_BUCKET --delete
+      - echo "Invalidating CloudFront Cache: $CLOUDFRONT_ID"
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths "/*"
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: build
+  discard-paths: no
